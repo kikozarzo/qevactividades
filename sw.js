@@ -1,6 +1,6 @@
 // Service worker mínimo: guarda la "carcasa" de la app para que abra rápido.
 // Los datos siguen viniendo siempre de Apps Script (no se cachean).
-const CACHE = 'qev-v1';
+const CACHE = 'qev-v2';
 const SHELL = [
   './',
   'index.html',
