@@ -90,7 +90,10 @@
   </div>
 
   <!-- ⚠️ Si algún día cambias la implementación, actualiza aquí la URL /exec -->
+  <!-- credentialless: carga la app sin las cuentas de Google del navegador
+       (igual que en incógnito), así no sale el error de "no se puede abrir el archivo" -->
   <iframe
+    credentialless
     id="app"
     title="Actividades QEV"
     src="https://script.google.com/macros/s/AKfycbwdiGbDJZGLDORbjyyspis0YAouXzb8vEHftsNFQiQcCvNGakhqU45PpjQHnZXMogZIfA/exec"
