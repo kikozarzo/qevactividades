@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Actividades QEV</title>
+  <meta name="description" content="Agenda de actividades de Quart Extramurs">
+  <meta name="theme-color" content="#96384c">
+
+  <!-- Instalación como app -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="QEV">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #f7f6f4;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    }
+    body {
+      padding-top: env(safe-area-inset-top);
+      box-sizing: border-box;
+    }
+    #app {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 14px;
+      color: #74767d;
+      background: #f7f6f4;
+      font-size: 15px;
+      transition: opacity .3s;
+    }
+    #loading img {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+    }
+    #loading.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #offline {
+      display: none;
+      position: fixed;
+      inset: 0;
+      place-items: center;
+      align-content: center;
+      gap: 12px;
+      padding: 24px;
+      text-align: center;
+      background: #f7f6f4;
+      color: #292b30;
+    }
+    #offline button {
+      background: #96384c;
+      color: #fff;
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 20px;
+      font: inherit;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <img src="icon-192.png" alt="">
+    <span>Cargando Actividades QEV…</span>
+  </div>
+
+  <div id="offline">
+    <strong>Sin conexión</strong>
+    <span>Actividades QEV necesita Internet para funcionar.</span>
+    <button type="button" onclick="location.reload()">Reintentar</button>
+  </div>
+
+  <!-- ⚠️ Si algún día cambias la implementación, actualiza aquí la URL /exec -->
+  <iframe
+    id="app"
+    title="Actividades QEV"
+    src="https://script.google.com/macros/s/AKfycbwdiGbDJZGLDORbjyyspis0YAouXzb8vEHftsNFQiQcCvNGakhqU45PpjQHnZXMogZIfA/exec"
+    allow="clipboard-write"></iframe>
+
+  <script>
+    var loading = document.getElementById('loading');
+    var offline = document.getElementById('offline');
+
+    document.getElementById('app').addEventListener('load', function () {
+      loading.classList.add('hide');
+    });
+
+    if (!navigator.onLine) {
+      offline.style.display = 'grid';
+    }
+    window.addEventListener('offline', function () { offline.style.display = 'grid'; });
+    window.addEventListener('online', function () { location.reload(); });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+    }
+  </script>
+</body>
+</html>
